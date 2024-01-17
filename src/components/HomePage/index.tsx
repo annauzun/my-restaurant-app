@@ -19,6 +19,7 @@ const HomePage = () => {
                     return (
                         <div className="mx-10 flex flex-col my-2 border rounded-md ">
                             <img
+                            alt=""
                                 src={restaurant.image}
                                 className=" h-48 object-cover object-center"
                             ></img>
