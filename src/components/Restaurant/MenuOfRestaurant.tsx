@@ -1,4 +1,3 @@
-import Cart from "components/Cart"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
@@ -22,7 +21,7 @@ const MenuOfRestaurant = () => {
         )
             .then((response) => response.json())
             .then((data) => setItems(data))
-    }, [])
+    }, [slug])
 
     console.log(items)
 
@@ -34,6 +33,7 @@ const MenuOfRestaurant = () => {
                             <div className="mx-6 flex flex-col my-2 border rounded-md bg-white py-2 px-4 justify-between items-center shadow-lg">
                                 <img
                                     src={item.image}
+                                    alt=""
                                     className=" h-48 object-cover object-center"
                                 ></img>
                                 <h3 className="text-3xl text-stone-800 text-center my-2">
