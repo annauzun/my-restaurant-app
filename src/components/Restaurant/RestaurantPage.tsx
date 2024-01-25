@@ -31,33 +31,23 @@ const RestaurantPage = () => {
 
     console.log(restaurant)
 
-    useEffect(() => {
-        fetch(
-            `https://www.bit-by-bit.ru/api/student-projects/restaurants/${slug}`
-        )
-            .then((response) => response.json())
-            .then((data) => setRestaurant(data))
-    }, [slug])
-
-    console.log(restaurant)
-
     return (
         <>
-            <div className="flex flex-col mt-10 relative">
+            <div className="flex flex-col relative">
                 <img
                     alt=""
                     src={restaurant?.image}
-                    className="h-72 object-cover object-center  w-4/5  shadow-md rounded-3xl mb-6 mx-auto"
+                    className="h-96 object-cover object-center  w-full  shadow-md "
                 ></img>
-                <div className="text-6xl text-white font-['Rufina'] top-48 left-60 absolute ">
+                <div className="text-6xl text-white font-['Rufina'] top-12 left-60 absolute ">
                     {restaurant?.name}
                 </div>
-                <p className="text-xl text-center my-4 mx-auto w-3/4">
+                <p className="text-2xl text-center text-white my-4 mx-auto w-3/4 top-48 left-60 absolute">
                     {restaurant?.description}
                 </p>
             </div>
 
-            <div className="text-lg  ml-20">
+            <div className="text-lg  ml-48 my-6">
                 <div className="flex gap-4">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +87,9 @@ const RestaurantPage = () => {
                         />
                     </svg>
                     <p className="font-medium">Время работы:</p>{" "}
-                    <p>{restaurant?.openAt} - {restaurant?.closeAt}</p>
+                    <p>
+                        {restaurant?.openAt} - {restaurant?.closeAt}
+                    </p>
                 </div>
                 <div className="flex gap-4">
                     <svg

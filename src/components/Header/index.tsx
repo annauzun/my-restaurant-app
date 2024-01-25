@@ -8,7 +8,7 @@ const Header = () => {
                     </a>
                     <div className="flex items-center text-xl gap-2">
                         <p>+7 123 456 7890</p>
-                        <div className="border ml-4 px-4 py-1">Заказать</div>
+                        <div className="border ml-4 px-4 py-1">Корзина</div>
                     </div>
                 </div>
             </div>
