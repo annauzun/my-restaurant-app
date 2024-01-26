@@ -15,7 +15,6 @@ const MenuOfRestaurant = () => {
     console.log(slug)
 
     const [items, setItems] = useState<ItemType[]>([])
-    const [cart, setCart] = useState([])
 
     useEffect(() => {
         fetch(
@@ -27,10 +26,10 @@ const MenuOfRestaurant = () => {
 
     console.log(items)
 
-    useEffect(() =>  {
+    /*useEffect(() =>  {
         const cartItems = JSON.stringify(cart)
     localStorage.setItem("cart", cartItems)
-    })
+    })*/
 
     
 
