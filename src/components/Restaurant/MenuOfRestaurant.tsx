@@ -15,6 +15,8 @@ const MenuOfRestaurant = () => {
     console.log(slug)
 
     const [items, setItems] = useState<ItemType[]>([])
+    const [cart, setCart] = useState([])
+
     useEffect(() => {
         fetch(
             `https://www.bit-by-bit.ru/api/student-projects/restaurants/${slug}/items`
@@ -25,10 +27,17 @@ const MenuOfRestaurant = () => {
 
     console.log(items)
 
+    useEffect(() =>  {
+        const cartItems = JSON.stringify(cart)
+    localStorage.setItem("cart", cartItems)
+    })
+
+    
+
     return (
         <>
             <div className="flex gap-4 ">
-                <div className="w-3/4 ml-20 gap-2 grid sm:grid-cols-2 lg:grid-cols-3">
+                <div className="w-3/4 ml-20 gap-2 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {items.map((item) => {
                         return (
                             <div className="flex flex-col m-2 border rounded-xl bg-white gap-4 pb-4 justify-between items-center shadow-lg">
@@ -49,7 +58,9 @@ const MenuOfRestaurant = () => {
                                     </p>
                                 </div>
                                 <Link to={`/сart`}>
-                                    <button className="my-2 px-4 py-2 rounded-md bg-[#5e6600] text-white border border-white hover:border-[#5e6600]">
+                                    <button 
+                                    
+                                    className="my-2 px-4 py-2 rounded-md bg-[#5e6600] text-white border border-white hover:border-[#5e6600]">
                                         Добавить в корзину
                                     </button>
                                 </Link>
@@ -61,7 +72,7 @@ const MenuOfRestaurant = () => {
                     <p className="px-4 py-2  bg-[#5e6600] text-white text-center text-2xl rounded-t-xl">
                         Корзина
                     </p>
-                    <div className="flex flex-col gap-4 justify-center items-center mt-40">
+                    <div className="flex flex-col gap-4 justify-center items-center mt-40 sm:scale-25 md:scale-50 lg:scale-75">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

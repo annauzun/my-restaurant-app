@@ -21,7 +21,7 @@ const HomePage = () => {
                     ЛУЧШИЕ РЕСТОРАНЫ ГОРОДА <br /> У ВАС ДОМА
                 </div>
             </div>
-            <div className="m-10 gap-6 grid sm:grid-cols-3 lg:grid-cols-4">
+            <div className="m-10 gap-6 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {restaurants.map((restaurant) => {
                     return (
                         <div className="flex flex-col bg-white p-2 justify-between rounded-lg shadow-xl">
@@ -34,8 +34,8 @@ const HomePage = () => {
                                 <h3 className="text-3xl text-stone-700 text-center my-3">
                                     {restaurant.name}
                                 </h3>
-                                <div className="flex flex-col gap-2">
-                                    <div className="flex gap-2">
+                                <div className="flex flex-col gap-2 flex-wrap text-md">
+                                    <div className="flex gap-2  flex-wrap">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
@@ -58,7 +58,7 @@ const HomePage = () => {
                                         <p className="font-medium">Адрес:</p>{" "}
                                         <p>{restaurant?.address}</p>
                                     </div>
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-2 flex-wrap">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
@@ -78,7 +78,7 @@ const HomePage = () => {
                                         </p>{" "}
                                         <p>{restaurant?.openAt}</p>
                                     </div>
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-2 flex-wrap">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
@@ -96,7 +96,7 @@ const HomePage = () => {
                                         <p className="font-medium">Телефон:</p>{" "}
                                         <p>+7 {restaurant?.phone}</p>
                                     </div>
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-2 flex-wrap">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"

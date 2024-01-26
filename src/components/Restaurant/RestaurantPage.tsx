@@ -39,16 +39,16 @@ const RestaurantPage = () => {
                     src={restaurant?.image}
                     className="h-96 object-cover object-center  w-full  shadow-md "
                 ></img>
-                <div className="text-6xl text-white font-['Rufina'] top-12 left-60 absolute ">
+                <div className="text-6xl text-white bg-[#5e6600bd] font-['Rufina'] font-medium top-12 pl-48 py-5 pr-12 absolute ">
                     {restaurant?.name}
                 </div>
-                <p className="text-2xl text-center text-white my-4 mx-auto w-3/4 top-48 left-60 absolute">
+                <p className="xl:text-2xl lg:text-xl sm:text-lg text-center text-[#5e6600] font-medium bg-slate-100/75 my-4  xl:w-3/4 lg:w-full top-36 pr-48 py-5 pl-12 right-0 absolute">
                     {restaurant?.description}
                 </p>
             </div>
 
-            <div className="text-lg  ml-48 my-6">
-                <div className="flex gap-4">
+            <div className="text-lg  mx-4 my-6 flex flex-wrap gap-10 justify-between">
+                <div className="flex gap-2 flex-wrap">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -71,7 +71,7 @@ const RestaurantPage = () => {
                     <p className="font-medium">Адрес:</p>{" "}
                     <p>{restaurant?.address}</p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-2 flex-wrap">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -91,7 +91,7 @@ const RestaurantPage = () => {
                         {restaurant?.openAt} - {restaurant?.closeAt}
                     </p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-2 flex-wrap">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -109,7 +109,7 @@ const RestaurantPage = () => {
                     <p className="font-medium">Телефон:</p>{" "}
                     <p>+7 {restaurant?.phone}</p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-2 flex-wrap">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
