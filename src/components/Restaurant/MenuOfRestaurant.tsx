@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { Link } from "react-router-dom"
-import EmptyCart from "./EmptyCart"
+import Cart from "../Cart"
 import DescriptionModal from "./DescriptionModal"
 
-type ItemType = {
+export type ItemType = {
     id: number
     name: string
     image: string
@@ -12,63 +11,73 @@ type ItemType = {
     price: number
     restaurantId: number
 }
+
 const MenuOfRestaurant = () => {
     const { slug } = useParams()
     console.log(slug)
+    const [menuItems, setMenuItems] = useState<ItemType[]>([])
+    const [cartItems, setCartItems] = useState<ItemType[]>([])
 
-    const [items, setItems] = useState<ItemType[]>([])
-    
     useEffect(() => {
         fetch(
             `https://www.bit-by-bit.ru/api/student-projects/restaurants/${slug}/items`
         )
             .then((response) => response.json())
-            .then((data) => setItems(data))
+            .then((data) => setMenuItems(data))
     }, [slug])
 
-    console.log(items)
+    console.log(menuItems)
 
-    /*useEffect(() =>  {
-        const cartItems = JSON.stringify(cart)
-    localStorage.setItem("cart", cartItems)
-    })*/
-
-    
-
+    useEffect(() => {
+        
+        localStorage.setItem("cart", JSON.stringify(cartItems))
+    }, [cartItems])
+    console.log(cartItems)
+    /*const addToCart = (item: ItemType): void => {
+        setCartItems([...cartItems, item])
+        console.log(cartItems)
+    }
+    */
     return (
         <>
-            <div className="flex gap-4 ">
-                <div className="w-3/4 ml-20 gap-2 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {items.map((item) => {
+            <div className="flex gap-4 px-10">
+                <div className="2xl:w-3/4 gap-2 grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    {menuItems.map((item) => {
                         return (
-                            <div className="flex flex-col m-2 border rounded-xl bg-white gap-2 pb-4 justify-between items-center shadow-xl hover:opacity-85">
+                            <div className="flex flex-col border bg-white shadow-xl rounded-xl relative">
                                 <div>
                                     <img
                                         src={item.image}
                                         alt=""
-                                        className="rounded-t-xl h-48 object-cover object-center w-full"
+                                        className="2xl:h-72 xl:h-60 lg:h-36 object-cover object-center w-full rounded-t-xl"
                                     ></img>
-                                    <div className="text-center text-2xl font-[Oxygen] text-stone-800 mb-2">
-                                        <p className="font-semibold px-4 py-2  bg-[#5e6600] text-white">
-                                            {Math.round(item.price)} руб.
-                                        </p>
-                                    </div>
-                                    <DescriptionModal name={item.name} description={item.description}/>
+                                    <DescriptionModal
+                                        name={item.name}
+                                        description={item.description}
+                                    />
                                 </div>
-                                <Link to={`/сart`}>
-                                    <button 
-                                    
-                                    className="my-2 px-4 py-2 rounded-md bg-[#5e6600] text-white border border-white hover:border-[#5e6600]">
-                                        Добавить в корзину
-                                    </button>
-                                </Link>
+                                <div className="flex justify-center gap-4 py-2 rounded-b-xl items-center text-xl font-[Oxygen] bg-[#5e6600] text-white">
+                                    <p className="font-medium ">
+                                        {Math.round(item.price)} ₽
+                                    </p>
+
+                                    {/*<Link to={`/сart`}>*/}
+                                    <div>
+                                        <button
+                                            className="py-2 px-4 rounded-md  border border-white  hover:bg-white hover:text-[#5e6600] font-bold"
+                                            onClick={() => setCartItems([...cartItems, item])}
+                                        >
+                                            +
+                                        </button>
+                                        {/*</Link>*/}
+                                    </div>
+                                </div>
                             </div>
                         )
                     })}
                 </div>
-                
-                   <EmptyCart /> 
-               
+
+                <Cart />
             </div>
         </>
     )

@@ -1,5 +1,4 @@
-import { SlBasket } from "react-icons/sl";
-
+import { SlBasket } from "react-icons/sl"
 
 const Header = () => {
     return (

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 import { RestaurantType } from "components/Restaurant/RestaurantPage"
 import "./styles.css"
 import { format } from "date-fns"
-import { SlLocationPin, SlClock, SlPhone } from "react-icons/sl";
-import { MdAlternateEmail } from "react-icons/md";
+import { SlLocationPin, SlClock, SlPhone } from "react-icons/sl"
+import { MdAlternateEmail } from "react-icons/md"
 
 const HomePage = () => {
     const [restaurants, setRestaurants] = useState<RestaurantType[]>([])
@@ -40,7 +40,9 @@ const HomePage = () => {
                                 <div className="flex flex-col gap-2 flex-wrap text-md pl-2">
                                     <div className="flex gap-2  flex-wrap items-center">
                                         <SlLocationPin />
-                                        <p className="font-medium">Адрес:</p>{" "}
+                                        <p className="font-medium">
+                                            Адрес:
+                                        </p>{" "}
                                         <p>{restaurant.address}</p>
                                     </div>
                                     <div className="flex gap-2 flex-wrap items-center">
@@ -48,16 +50,27 @@ const HomePage = () => {
                                         <p className="font-medium">
                                             Время работы:
                                         </p>{" "}
-                                        <p>{format(restaurant.openAt, 'HH:mm')} - {format(restaurant.closeAt, 'HH:mm')}</p>
+                                        <p>
+                                            {format(restaurant.openAt, "HH:mm")}{" "}
+                                            -{" "}
+                                            {format(
+                                                restaurant.closeAt,
+                                                "HH:mm"
+                                            )}
+                                        </p>
                                     </div>
                                     <div className="flex gap-2 flex-wrap items-center">
                                         <SlPhone />
-                                        <p className="font-medium">Телефон:</p>{" "}
+                                        <p className="font-medium">
+                                            Телефон:
+                                        </p>{" "}
                                         <p>+7 {restaurant.phone}</p>
                                     </div>
                                     <div className="flex gap-2 flex-wrap items-center">
                                         <MdAlternateEmail />
-                                        <p className="font-medium">E-mail:</p>{" "}
+                                        <p className="font-medium">
+                                            E-mail:
+                                        </p>{" "}
                                         <p>{restaurant.email}</p>
                                     </div>
                                 </div>
