@@ -50,22 +50,22 @@ const RestaurantPage = () => {
     }
 
     return (
-        <>
+        <div>
             <div className="flex flex-col relative">
                 <img
                     alt=""
                     src={restaurant.image}
                     className="h-96 object-cover object-center  w-full  shadow-md "
                 ></img>
-                <div className="text-6xl text-white bg-[#5e6600bd] font-['Rufina'] font-medium top-12 pl-48 py-5 pr-12 absolute ">
+                <div className="text-2xl md:text-4xl lg:text-6xl text-white bg-[#5e6600bd] font-['Rufina'] font-medium top-12 pl-24 py-5 pr-12 absolute ">
                     {restaurant.name}
                 </div>
-                <p className="xl:text-2xl lg:text-xl sm:text-lg text-center text-[#5e6600] font-medium bg-slate-100/75 my-4  xl:w-3/4 lg:w-full top-36 pr-48 py-5 pl-12 right-0 absolute">
+                <p className="w-full md:w-4/5 flex text-center text-[#5e6600] text-md md:text-xl lg:text-2xl font-medium bg-slate-100/75 my-4 pl-2 top-36 right-0 absolute">
                     {restaurant.description}
                 </p>
             </div>
 
-            <div className="text-lg  mx-4 my-6 flex flex-wrap gap-10 justify-between">
+            <div className="text-lg  mx-4 my-6 flex flex-wrap gap-4 justify-between">
                 <div className="flex gap-2 flex-wrap items-center">
                     <SlLocationPin />
                     <p className="font-medium">Адрес:</p>{" "}
@@ -92,7 +92,7 @@ const RestaurantPage = () => {
             </div>
 
             <MenuOfRestaurant />
-        </>
+        </div>
     )
 }
 

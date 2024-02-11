@@ -1,14 +1,18 @@
 import { SlBasket } from "react-icons/sl"
+import { Link } from "react-router-dom"
 
 const EmptyCart = () => {
     return (
         <>
-            <div className="flex flex-col gap-4 justify-center items-center mt-20 ">
-                <SlBasket className="h-1/3 w-1/3" />
-                <p className="text-3xl text-center mx-4 text-stone-800">
-                    Ваша корзина пока пуста
-                </p>
-            </div>
+            <SlBasket className="h-1/4 w-1/4" />
+            <p className="text-2xl text-center mx-4 mb-10 text-stone-800">
+                Ваша корзина пуста
+            </p>
+            <Link to={`/`}>
+                <button className="mx-auto px-4 py-2 rounded-md bg-[#5e6600] text-white border border-white hover:border-[#5e6600]">
+                    Перейти на главную страницу
+                </button>
+            </Link>
         </>
     )
 }

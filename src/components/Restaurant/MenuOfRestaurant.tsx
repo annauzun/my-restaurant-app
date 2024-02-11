@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import Cart from "../Cart"
 import DescriptionModal from "./DescriptionModal"
 
 export type ItemType = {
@@ -10,12 +9,14 @@ export type ItemType = {
     description: string
     price: number
     restaurantId: number
+    quantity: 1
 }
 
 const MenuOfRestaurant = () => {
     const { slug } = useParams()
     console.log(slug)
     const [menuItems, setMenuItems] = useState<ItemType[]>([])
+
     const [cartItems, setCartItems] = useState<ItemType[]>([])
 
     useEffect(() => {
@@ -29,8 +30,10 @@ const MenuOfRestaurant = () => {
     console.log(menuItems)
 
     useEffect(() => {
-        
         localStorage.setItem("cart", JSON.stringify(cartItems))
+        if (!localStorage.getItem("cart")) {
+            localStorage.setItem("cart", "[]")
+        }
     }, [cartItems])
     console.log(cartItems)
     /*const addToCart = (item: ItemType): void => {
@@ -38,10 +41,11 @@ const MenuOfRestaurant = () => {
         console.log(cartItems)
     }
     */
+
     return (
         <>
-            <div className="flex gap-4 px-10">
-                <div className="2xl:w-3/4 gap-2 grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            <div className="w-4/5 mx-auto flex gap-4">
+                <div className="w-full gap-2 grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     {menuItems.map((item) => {
                         return (
                             <div className="flex flex-col border bg-white shadow-xl rounded-xl relative">
@@ -49,7 +53,7 @@ const MenuOfRestaurant = () => {
                                     <img
                                         src={item.image}
                                         alt=""
-                                        className="2xl:h-72 xl:h-60 lg:h-36 object-cover object-center w-full rounded-t-xl"
+                                        className="h-40 sm:h-48 xl:h-54 lg:h-60 object-cover object-center w-full rounded-t-xl"
                                     ></img>
                                     <DescriptionModal
                                         name={item.name}
@@ -65,7 +69,12 @@ const MenuOfRestaurant = () => {
                                     <div>
                                         <button
                                             className="py-2 px-4 rounded-md  border border-white  hover:bg-white hover:text-[#5e6600] font-bold"
-                                            onClick={() => setCartItems([...cartItems, item])}
+                                            onClick={() =>
+                                                setCartItems([
+                                                    ...cartItems,
+                                                    item
+                                                ])
+                                            }
                                         >
                                             +
                                         </button>
@@ -76,8 +85,6 @@ const MenuOfRestaurant = () => {
                         )
                     })}
                 </div>
-
-                <Cart />
             </div>
         </>
     )
