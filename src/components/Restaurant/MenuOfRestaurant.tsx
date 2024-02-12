@@ -36,11 +36,15 @@ const MenuOfRestaurant = () => {
         }
     }, [cartItems])
     console.log(cartItems)
-    /*const addToCart = (item: ItemType): void => {
-        setCartItems([...cartItems, item])
+
+    const addToCart = (item: ItemType): void => {
+        let isAdded = false
+        cartItems.forEach((el) => {
+            if (el.id === item.id) isAdded = true
+        })
+        if (!isAdded) setCartItems([...cartItems, item])
         console.log(cartItems)
     }
-    */
 
     return (
         <>
@@ -69,12 +73,7 @@ const MenuOfRestaurant = () => {
                                     <div>
                                         <button
                                             className="py-2 px-4 rounded-md  border border-white  hover:bg-white hover:text-[#5e6600] font-bold"
-                                            onClick={() =>
-                                                setCartItems([
-                                                    ...cartItems,
-                                                    item
-                                                ])
-                                            }
+                                            onClick={() => addToCart(item)}
                                         >
                                             +
                                         </button>
