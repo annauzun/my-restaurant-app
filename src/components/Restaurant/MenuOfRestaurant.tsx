@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import DescriptionModal from "./DescriptionModal"
+import Cart from "components/Cart"
+
 
 export type ItemType = {
     id: number
@@ -8,16 +10,26 @@ export type ItemType = {
     image: string
     description: string
     price: number
-    restaurantId: number
-    quantity: 1
+    restaurantId: number   
+}
+
+export type CartItemType = {
+    id: number
+    itemId: number
+    quantity: number 
+    restaurantId: number 
+    name: string
+    image: string
+    description: string
+    price: number 
 }
 
 const MenuOfRestaurant = () => {
     const { slug } = useParams()
-    console.log(slug)
     const [menuItems, setMenuItems] = useState<ItemType[]>([])
 
-    const [cartItems, setCartItems] = useState<ItemType[]>([])
+    const [cartItems, setCartItems] = useState<CartItemType[]>(JSON.parse(localStorage.getItem("cart")!) || [])
+
 
     useEffect(() => {
         fetch(
@@ -27,21 +39,73 @@ const MenuOfRestaurant = () => {
             .then((data) => setMenuItems(data))
     }, [slug])
 
-    console.log(menuItems)
 
     useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cartItems))
-        if (!localStorage.getItem("cart")) {
-            localStorage.setItem("cart", "[]")
-        }
-    }, [cartItems])
-    console.log(cartItems)
-    /*const addToCart = (item: ItemType): void => {
-        setCartItems([...cartItems, item])
-        console.log(cartItems)
-    }
-    */
 
+        console.log("cartItems", cartItems)
+        localStorage.setItem("cart", JSON.stringify(cartItems))
+        /*if (!localStorage.getItem("cart")) {
+            localStorage.setItem("cart", "[]")
+        }*/
+    }, [cartItems])
+    
+    const addToCart = (item: ItemType): void => {
+        const currentCartItem = cartItems.find(cartItem => cartItem.itemId === item.id)
+
+        if (currentCartItem) {
+            const newCartItem: CartItemType = {
+                ...currentCartItem,
+                quantity: currentCartItem.quantity + 1
+            }
+
+            let newItems = cartItems.filter(cartItem => cartItem.itemId !== currentCartItem.itemId)
+
+            setCartItems([...newItems, newCartItem])
+        } else {
+            const newCartItem: CartItemType = {
+                id: 123,
+                itemId: item.id, 
+                quantity: 1,
+                restaurantId: item.restaurantId,
+                name: item.name,
+                image: item.image,
+                description: item.description,
+                price: item.price
+            }
+            setCartItems([...cartItems, newCartItem])
+        }
+    }
+
+    const removeFromCart = (item: ItemType): void => {
+        const currentCartItem = cartItems.find(cartItem => cartItem.itemId === item.id)
+
+        if (currentCartItem && currentCartItem.quantity > 1) {
+            const newCartItem: CartItemType = {
+                ...currentCartItem,
+                quantity: currentCartItem.quantity - 1
+            }
+
+            let newItems = cartItems.filter(cartItem => cartItem.itemId !== currentCartItem.itemId)
+
+            setCartItems([...newItems, newCartItem])
+        } else {
+            const newCartItem: CartItemType = {
+                id: 123,
+                itemId: item.id, 
+                quantity: 1,
+                restaurantId: item.restaurantId,
+                name: item.name,
+                image: item.image,
+                description: item.description,
+                price: item.price
+            }
+            setCartItems([...cartItems, newCartItem])
+        }
+    }
+
+    const findCurrentItem = (item: ItemType) => {
+        return cartItems.find(c => c.itemId === item.id)
+    }
     return (
         <>
             <div className="w-4/5 mx-auto flex gap-4">
@@ -60,21 +124,29 @@ const MenuOfRestaurant = () => {
                                         description={item.description}
                                     />
                                 </div>
-                                <div className="flex justify-center gap-4 py-2 rounded-b-xl items-center text-xl font-[Oxygen] bg-[#5e6600] text-white">
-                                    <p className="font-medium ">
-                                        {Math.round(item.price)} ₽
+                                <p className="text-xl font-[Oxygen] font-semibold p-1 z-20 text-[#5e6600] text-left ml-2">
+                                        Цена: {Math.round(item.price)} руб.
                                     </p>
 
+                                <div >
+                                    
                                     {/*<Link to={`/сart`}>*/}
-                                    <div>
+                                    <div className="flex justify-center py-2 gap-5 rounded-b-xl items-center text-xl font-[Oxygen] bg-[#5e6600] text-white">
+                                    <button
+                                            className="px-2  rounded-md  border border-white  hover:bg-white hover:text-[#5e6600] font-bold"
+                                            onClick={() => removeFromCart(item)}
+                                        >
+                                            -
+                                        </button>
+                                       
+                                        {findCurrentItem(item) && 
+                                            <div>
+                                                
+                                                {findCurrentItem(item)?.quantity}</div>
+                                        }
                                         <button
-                                            className="py-2 px-4 rounded-md  border border-white  hover:bg-white hover:text-[#5e6600] font-bold"
-                                            onClick={() =>
-                                                setCartItems([
-                                                    ...cartItems,
-                                                    item
-                                                ])
-                                            }
+                                            className="px-2  rounded-md  border border-white  hover:bg-white hover:text-[#5e6600] font-bold"
+                                            onClick={() => addToCart(item)}
                                         >
                                             +
                                         </button>
@@ -85,6 +157,9 @@ const MenuOfRestaurant = () => {
                         )
                     })}
                 </div>
+            </div>
+            <div className="w-1/4">
+                <Cart />
             </div>
         </>
     )

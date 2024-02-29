@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 const Header = () => {
     return (
         <div className="">
-            <div className="flex py-3 sticky z-10 top-0 bg-[#5e6600bd] shadow-md shadow-slate  font-['Rufina'] text-white">
+            <div className="flex py-3 sticky z-100 top-0 bg-[#5e6600bd] shadow-md shadow-slate  font-['Rufina'] text-white">
                 <div className="flex justify-between w-4/5 mx-auto">
                     <Link to={`/`} className="text-xl md:text-4xl">
                         FoodRest
