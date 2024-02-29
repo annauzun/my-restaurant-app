@@ -41,6 +41,24 @@ const MenuOfRestaurant = () => {
 
 
     useEffect(() => {
+<<<<<<< HEAD
+=======
+        localStorage.setItem("cart", JSON.stringify(cartItems))
+        if (!localStorage.getItem("cart")) {
+            localStorage.setItem("cart", "[]")
+        }
+    }, [cartItems])
+    console.log(cartItems)
+
+    const addToCart = (item: ItemType): void => {
+        let isAdded = false
+        cartItems.forEach((el) => {
+            if (el.id === item.id) isAdded = true
+        })
+        if (!isAdded) setCartItems([...cartItems, item])
+        console.log(cartItems)
+    }
+>>>>>>> 5365aac7e10c3d74d0487238fce8b983e8b5c90b
 
         console.log("cartItems", cartItems)
         localStorage.setItem("cart", JSON.stringify(cartItems))
@@ -145,7 +163,11 @@ const MenuOfRestaurant = () => {
                                                 {findCurrentItem(item)?.quantity}</div>
                                         }
                                         <button
+<<<<<<< HEAD
                                             className="px-2  rounded-md  border border-white  hover:bg-white hover:text-[#5e6600] font-bold"
+=======
+                                            className="py-2 px-4 rounded-md  border border-white  hover:bg-white hover:text-[#5e6600] font-bold"
+>>>>>>> 5365aac7e10c3d74d0487238fce8b983e8b5c90b
                                             onClick={() => addToCart(item)}
                                         >
                                             +
