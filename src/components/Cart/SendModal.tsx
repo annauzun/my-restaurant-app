@@ -1,19 +1,20 @@
 import { Dialog, Transition } from "@headlessui/react"
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 
-export default function MyModal() {
-    let [isOpen, setIsOpen] = useState(false)
+type Props = {
+    isOpen: boolean
+    setIsOpen: any
+}
+
+export default function MyModal(props: Props) {
+    const { isOpen, setIsOpen } = props
 
     function closeModal() {
         setIsOpen(false)
     }
 
-    
-
     return (
         <>
-            
-
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>
                     <Transition.Child

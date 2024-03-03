@@ -15,7 +15,7 @@ const HomePage = () => {
             .then((data) => setRestaurants(data))
     }, [])
     console.log(restaurants)
-    if (!restaurants) {
+    if (restaurants.length === 0) {
         return (
             <div className="mt-[400px] text-center">
                 <div

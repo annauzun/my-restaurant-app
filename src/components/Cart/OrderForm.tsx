@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react"
 import MyModal from "./SendModal"
 
-
 export type OrderType = {
     customerName: string
-  phone: number
-  email: string
-  restaurantId: number
-  cartItems: [
-    { itemId: number, quantity: number, price: number}
-  ]
+    phone: number
+    email: string
+    restaurantId: number
+    cartItems: [{ itemId: number; quantity: number; price: number }]
 }
+
 const OrderForm = () => {
     const [cartItems, setCartItems] = useState(
         JSON.parse(localStorage.getItem("cart")!) || []
     )
+
     useEffect(() => {
         console.log("cartItems", cartItems)
         localStorage.setItem("cart", JSON.stringify(cartItems))
@@ -25,29 +24,39 @@ const OrderForm = () => {
     const [customerName, setCustomerName] = useState<string>("")
     const [phone, setPhone] = useState<string>("")
     const [email, setEmail] = useState<string>("")
-    const handleSubmit = (e: any) => {
-        e.preventDefault()
+    /* const [restaurantId, setRestaurantId] = useState<number>()*/
+    let [isOpen, setIsOpen] = useState(false)
 
-        const data: OrderType = {
-			customerName: customerName,
-			phone: parseInt(phone),
-			email: email,
-			restaurantId: 5,
-			cartItems: cartItems,
-		};
-console.log(data)
-		fetch("https://www.bit-by-bit.ru/api/student-projects/restaurants/order", {
-			method: "POST",
-			body: JSON.stringify(data),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				
-				setCartItems(data.cartItems);
-				setCartItems([]);
-			})
-			
+    const handleSubmit = () => {
+        const requestBody: OrderType = {
+            customerName: customerName,
+            phone: parseInt(phone),
+            email: email,
+            restaurantId: 2,
+            cartItems: cartItems
+        }
+        console.log(requestBody)
+
+        fetch(
+            "https://www.bit-by-bit.ru/api/student-projects/restaurants/order",
+            {
+                method: "POST",
+                body: JSON.stringify(requestBody)
+            }
+        )
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result)
+                setCustomerName("")
+                setPhone("")
+                setEmail("")
+                setIsOpen(true)
+                setCartItems(result.cartItems)
+                setCartItems([])
+                localStorage.clear()
+            })
     }
+
     return (
         <div className="">
             <div className="">
@@ -89,7 +98,7 @@ console.log(data)
                     Отправить заказ
                 </button>
             </div>
-            <MyModal />
+            <MyModal isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
     )
 }

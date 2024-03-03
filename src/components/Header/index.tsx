@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
 import { SlBasket } from "react-icons/sl"
 
-
 const Header = () => {
     return (
         <div className="">
