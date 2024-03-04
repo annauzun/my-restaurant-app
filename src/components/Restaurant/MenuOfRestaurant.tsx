@@ -50,7 +50,7 @@ const MenuOfRestaurant = () => {
         }*/
     }, [cartItems])
 
-    const addToCart = (item: ItemType): void => {
+    const increaseQuantity = (item: ItemType): void => {
         const currentCartItem = cartItems.find(
             (cartItem) => cartItem.itemId === item.id
         )
@@ -61,11 +61,13 @@ const MenuOfRestaurant = () => {
                 quantity: currentCartItem.quantity + 1
             }
 
-            let newItems = cartItems.filter(
-                (cartItem) => cartItem.itemId !== currentCartItem.itemId
+            let newItems = cartItems.map((cartItem) =>
+                cartItem.itemId === currentCartItem.itemId
+                    ? newCartItem
+                    : cartItem
             )
 
-            setCartItems([...newItems, newCartItem])
+            setCartItems(newItems)
         } else {
             const newCartItem: CartItemType = {
                 id: parseInt(uuidv4()),
@@ -81,7 +83,7 @@ const MenuOfRestaurant = () => {
         }
     }
 
-    const removeFromCart = (item: ItemType): void => {
+    const decreaseQuantity = (item: ItemType): void => {
         const currentCartItem = cartItems.find(
             (cartItem) => cartItem.itemId === item.id
         )
@@ -93,15 +95,17 @@ const MenuOfRestaurant = () => {
                     quantity: currentCartItem.quantity - 1
                 }
 
-                let newItems = cartItems.filter(
-                    (cartItem) => cartItem.itemId !== currentCartItem.itemId
+                let newItems = cartItems.map((cartItem) =>
+                    cartItem.itemId === currentCartItem.itemId
+                        ? newCartItem
+                        : cartItem
                 )
 
-                setCartItems([...newItems, newCartItem])
+                setCartItems(newItems)
             }
         } else {
             const newCartItem: CartItemType = {
-                id: 123,
+                id: parseInt(uuidv4()),
                 itemId: item.id,
                 quantity: 1,
                 restaurantId: item.restaurantId,
@@ -178,7 +182,7 @@ const MenuOfRestaurant = () => {
                                             <button
                                                 className="hover:text-black font-bold"
                                                 onClick={() =>
-                                                    removeFromCart(item)
+                                                    decreaseQuantity(item)
                                                 }
                                             >
                                                 {" "}
@@ -195,7 +199,9 @@ const MenuOfRestaurant = () => {
                                             )}
                                             <button
                                                 className="hover:text-black font-bold"
-                                                onClick={() => addToCart(item)}
+                                                onClick={() =>
+                                                    increaseQuantity(item)
+                                                }
                                             >
                                                 {" "}
                                                 <HiPlus />{" "}
@@ -206,7 +212,9 @@ const MenuOfRestaurant = () => {
                                     ) : (
                                         <button
                                             className="flex justify-center py-2 rounded-b-xl items-center text-xl bg-[#5e6600] text-white w-full hover:text-stone-900"
-                                            onClick={() => addToCart(item)}
+                                            onClick={() =>
+                                                increaseQuantity(item)
+                                            }
                                         >
                                             Заказать
                                         </button>

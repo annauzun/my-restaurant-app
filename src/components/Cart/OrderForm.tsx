@@ -6,7 +6,7 @@ export type OrderType = {
     phone: number
     email: string
     restaurantId: number
-    cartItems: [{ itemId: number; quantity: number; price: number }]
+    cartItems: [item : { itemId: number; quantity: number; price: number }]
 }
 
 const OrderForm = () => {
@@ -26,8 +26,17 @@ const OrderForm = () => {
     const [email, setEmail] = useState<string>("")
     /* const [restaurantId, setRestaurantId] = useState<number>()*/
     let [isOpen, setIsOpen] = useState(false)
+    let [warning, setWarning] = useState(false)
 
-    const handleSubmit = () => {
+    const handleSubmit = (e:any) => {
+		e.preventDefault();
+
+        try {
+        if (customerName === '' || phone === '' || email ==='') {
+            setWarning(true)
+            return
+          }
+
         const requestBody: OrderType = {
             customerName: customerName,
             phone: parseInt(phone),
@@ -51,16 +60,25 @@ const OrderForm = () => {
                 setPhone("")
                 setEmail("")
                 setIsOpen(true)
+                setWarning(false)
                 setCartItems(result.cartItems)
                 setCartItems([])
                 localStorage.clear()
-            })
+                
+            })} catch (error){setWarning(true)}
     }
-
+    /*const clearCart = () => {
+        localStorage.clear()
+        setCartItems([])
+        
+    }*/
     return (
         <div className="">
             <div className="">
-                <p className="text-lg mt-2">Фамилия Имя</p>
+                <div className="flex flex-nowrap justify-between items-center">
+                <p className="text-md text-stone-600 mt-2">Фамилия Имя</p>
+                {warning && <p className="text-red-600">Заполните все поля</p>}
+                </div>
                 <input
                     value={customerName}
                     name="customerName"
@@ -70,7 +88,7 @@ const OrderForm = () => {
                 />
             </div>
             <div>
-                <p className="text-lg mt-2">Телефон для связи</p>
+                <p className="text-md text-stone-600 mt-2">Телефон для связи</p>
                 <input
                     value={phone}
                     name="phone"
@@ -80,7 +98,7 @@ const OrderForm = () => {
                 />
             </div>
             <div>
-                <p className="text-lg mt-2">Email</p>
+                <p className="text-md text-stone-600 mt-2">Email</p>
                 <input
                     value={email}
                     name="email"
@@ -89,7 +107,7 @@ const OrderForm = () => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-3">
                 <button
                     type="button"
                     onClick={handleSubmit}
