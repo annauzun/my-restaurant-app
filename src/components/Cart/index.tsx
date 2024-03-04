@@ -1,5 +1,5 @@
 import EmptyCart from "./EmptyCart"
-import { CartItemType, ItemType } from "components/Restaurant/MenuOfRestaurant"
+import { CartItemType } from "components/Restaurant/MenuOfRestaurant"
 import { CgClose } from "react-icons/cg"
 import { HiPlus, HiMinus } from "react-icons/hi2"
 import { useState, useEffect } from "react"
