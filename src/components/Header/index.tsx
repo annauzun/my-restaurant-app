@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { SlBasket } from "react-icons/sl"
-import { MdOutlineCall } from "react-icons/md";
+import { MdOutlineCall } from "react-icons/md"
 
 const Header = () => {
     return (
@@ -13,13 +13,22 @@ const Header = () => {
                     >
                         FoodRest
                     </Link>
-                    <div className="flex items-center gap-4">
-                        <p className="hidden sm:flex text-sm sm:text-xl ">+7 123 456 7890</p>
-                        <p className="flex sm:hidden"><MdOutlineCall /></p>
+                    <div className="flex items-center gap-4 text-xl">
+                        <p className="hidden sm:flex">
+                            +7 123 456 7890
+                        </p>
+                        <p className="flex sm:hidden">
+                            <MdOutlineCall />
+                        </p>
                         <Link to={`/cart`}>
-                            <button className="flex gap-1 justify-between items-center sm:text-xl ml-4">
-                                Корзина <SlBasket />
+                            <div className="flex gap-1 items-center ml-4 text-xl">
+                            <button className="hidden sm:flex">
+                                Корзина 
                             </button>
+                            <button className="flex sm:hidden">
+                                <SlBasket />
+                            </button>
+                            </div>
                         </Link>
                     </div>
                 </div>

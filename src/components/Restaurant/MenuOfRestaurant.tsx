@@ -5,6 +5,7 @@ import { SlBasket } from "react-icons/sl"
 import { Link } from "react-router-dom"
 import { HiPlus, HiMinus } from "react-icons/hi2"
 import { v4 as uuidv4 } from "uuid"
+import ErrorModal from "./ErrorModal"
 
 export type ItemType = {
     id: number
@@ -16,7 +17,7 @@ export type ItemType = {
 }
 
 export type CartItemType = {
-    id: number
+    id: string
     itemId: number
     quantity: number
     restaurantId: number
@@ -29,6 +30,7 @@ export type CartItemType = {
 const MenuOfRestaurant = () => {
     const { slug } = useParams()
     const [menuItems, setMenuItems] = useState<ItemType[]>([])
+    let [isOpen, setIsOpen] = useState(false)
 
     const [cartItems, setCartItems] = useState<CartItemType[]>(
         JSON.parse(localStorage.getItem("cart")!) || []
@@ -50,7 +52,21 @@ const MenuOfRestaurant = () => {
         }*/
     }, [cartItems])
 
+    const clearCart = () => {
+        localStorage.clear()
+        setCartItems([])
+    }
+
     const increaseQuantity = (item: ItemType): void => {
+        try {
+            if (item.restaurantId !== cartItems[0].restaurantId) {
+                setIsOpen(true)
+                return
+            }
+        } catch (error) {
+            setIsOpen(false)
+        }
+
         const currentCartItem = cartItems.find(
             (cartItem) => cartItem.itemId === item.id
         )
@@ -66,11 +82,10 @@ const MenuOfRestaurant = () => {
                     ? newCartItem
                     : cartItem
             )
-
             setCartItems(newItems)
         } else {
             const newCartItem: CartItemType = {
-                id: parseInt(uuidv4()),
+                id: uuidv4(),
                 itemId: item.id,
                 quantity: 1,
                 restaurantId: item.restaurantId,
@@ -105,7 +120,7 @@ const MenuOfRestaurant = () => {
             }
         } else {
             const newCartItem: CartItemType = {
-                id: parseInt(uuidv4()),
+                id: uuidv4(),
                 itemId: item.id,
                 quantity: 1,
                 restaurantId: item.restaurantId,
@@ -141,6 +156,7 @@ const MenuOfRestaurant = () => {
                 : 0
         )
     }, [cartItems])
+
     return (
         <div className="flex px-2 gap-4">
             <div className="">
@@ -153,7 +169,13 @@ const MenuOfRestaurant = () => {
                     </button>
                 </Link>
             </div>
-
+            {isOpen && (
+                <ErrorModal
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    clearCart={clearCart}
+                />
+            )}
             <div className="w-4/5 mx-auto flex">
                 <div className="w-full gap-2 grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     {menuItems.map((item) => {
@@ -173,9 +195,7 @@ const MenuOfRestaurant = () => {
                                 <p className="text-xl font-semibold p-1 z-20 text-[#5e6600] text-left ml-2">
                                     Цена: {Math.round(item.price)} руб.
                                 </p>
-
                                 <div>
-                                    {/*<Link to={`/сart`}>*/}
                                     {findCurrentItem(item) &&
                                     findCurrentItem(item)?.quantity !== 0 ? (
                                         <div className="flex justify-center py-2 gap-5 rounded-b-xl items-center text-xl bg-[#5e6600] text-white">
@@ -188,7 +208,6 @@ const MenuOfRestaurant = () => {
                                                 {" "}
                                                 <HiMinus />{" "}
                                             </button>
-
                                             {findCurrentItem(item) && (
                                                 <div>
                                                     {
@@ -206,8 +225,6 @@ const MenuOfRestaurant = () => {
                                                 {" "}
                                                 <HiPlus />{" "}
                                             </button>
-
-                                            {/*</Link>*/}
                                         </div>
                                     ) : (
                                         <button

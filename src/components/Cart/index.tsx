@@ -39,7 +39,9 @@ const Cart = () => {
     }, [cartItems])
 
     const deleteItem = (id: number) => {
-        let newItems = cartItems.filter((item: CartItemType) => item.id !== id)
+        let newItems = cartItems.filter(
+            (item: CartItemType) => parseInt(item.id) !== id
+        )
         setCartItems(newItems)
         localStorage.setItem("cart", JSON.stringify(newItems))
     }
@@ -180,7 +182,9 @@ const Cart = () => {
                                             <button
                                                 className="text-lg hover:scale-125"
                                                 onClick={() =>
-                                                    deleteItem(item.id)
+                                                    deleteItem(
+                                                        parseInt(item.id)
+                                                    )
                                                 }
                                             >
                                                 <CgClose />
@@ -199,7 +203,7 @@ const Cart = () => {
                                             Оформить заказ
                                         </p>
                                         <div className="">
-                                            <OrderForm />
+                                            <OrderForm clearCart={clearCart} />
                                         </div>
                                     </div>
                                 </div>

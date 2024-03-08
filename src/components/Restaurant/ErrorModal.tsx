@@ -7,7 +7,7 @@ type Props = {
     clearCart: () => void
 }
 
-export default function MyModal(props: Props) {
+const ErrorModal = (props: Props) => {
     const { isOpen, setIsOpen, clearCart } = props
 
     function closeModal() {
@@ -41,29 +41,41 @@ export default function MyModal(props: Props) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                <Dialog.Panel className="w-full px-2 md:w-1/2 transform overflow-hidden bg-white p-6 text-center align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="h3"
-                                        className="text-lg font-medium leading-6 text-gray-900"
+                                        className="text-lg font-medium leading-6 text-red-600"
                                     >
-                                        Спасибо!
+                                        Обратите внимание!
                                     </Dialog.Title>
-                                    <div className="mt-2">
-                                        <p className="text-sm text-gray-500">
-                                            Ваш заказ успешно отправлен!
+                                    <div className="">
+                                        <p className="text-xl text-gray-500 my-4">
+                                            В вашей корзине есть товары из 
+                                            другого ресторана!
+                                        </p>
+                                        <p className="text-lg text-gray-900">
+                                            Корзина будет очищена. Хотите
+                                            продожить?
                                         </p>
                                     </div>
 
-                                    <div className="mt-4">
+                                    <div className="flex justify-center gap-4 my-4">
                                         <button
                                             type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-[#5e6600] px-4 py-2 text-sm font-medium text-white hover:bg-stone-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                                            className="rounded-md border border-transparent bg-[#5e6600] px-4 py-2 text-sm font-medium text-white hover:bg-stone-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
                                             onClick={() => {
-                                                closeModal()
                                                 clearCart()
+                                                closeModal()
                                             }}
                                         >
-                                            Закрыть
+                                            Да
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="rounded-md border border-transparent bg-[#5e6600] px-4 py-2 text-sm font-medium text-white hover:bg-stone-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-500 focus-visible:ring-offset-2"
+                                            onClick={() => closeModal()}
+                                        >
+                                            Нет
                                         </button>
                                     </div>
                                 </Dialog.Panel>
@@ -75,3 +87,4 @@ export default function MyModal(props: Props) {
         </>
     )
 }
+export default ErrorModal

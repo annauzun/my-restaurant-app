@@ -6,10 +6,16 @@ export type OrderType = {
     phone: number
     email: string
     restaurantId: number
-    cartItems: [item : { itemId: number; quantity: number; price: number }]
+    cartItems: [item: { itemId: number; quantity: number; price: number }]
 }
 
-const OrderForm = () => {
+const OrderForm = ({ clearCart }: { clearCart: () => void }) => {
+    const [customerName, setCustomerName] = useState<string>("")
+    const [phone, setPhone] = useState<string>("")
+    const [email, setEmail] = useState<string>("")
+    let [isOpen, setIsOpen] = useState(false)
+    let [warning, setWarning] = useState(false)
+
     const [cartItems, setCartItems] = useState(
         JSON.parse(localStorage.getItem("cart")!) || []
     )
@@ -21,63 +27,56 @@ const OrderForm = () => {
 
     console.log(cartItems)
 
-    const [customerName, setCustomerName] = useState<string>("")
-    const [phone, setPhone] = useState<string>("")
-    const [email, setEmail] = useState<string>("")
-    /* const [restaurantId, setRestaurantId] = useState<number>()*/
-    let [isOpen, setIsOpen] = useState(false)
-    let [warning, setWarning] = useState(false)
-
-    const handleSubmit = (e:any) => {
-		e.preventDefault();
+    const handleSubmit = (e: any) => {
+        e.preventDefault()
 
         try {
-        if (customerName === '' || phone === '' || email ==='') {
-            setWarning(true)
-            return
-          }
-
-        const requestBody: OrderType = {
-            customerName: customerName,
-            phone: parseInt(phone),
-            email: email,
-            restaurantId: 2,
-            cartItems: cartItems
-        }
-        console.log(requestBody)
-
-        fetch(
-            "https://www.bit-by-bit.ru/api/student-projects/restaurants/order",
-            {
-                method: "POST",
-                body: JSON.stringify(requestBody)
+            if (customerName === "" || phone === "" || email === "") {
+                setWarning(true)
+                return
             }
-        )
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result)
-                setCustomerName("")
-                setPhone("")
-                setEmail("")
-                setIsOpen(true)
-                setWarning(false)
-                setCartItems(result.cartItems)
-                setCartItems([])
-                localStorage.clear()
-                
-            })} catch (error){setWarning(true)}
+
+            const requestBody: OrderType = {
+                customerName: customerName,
+                phone: parseInt(phone),
+                email: email,
+                restaurantId: 2,
+                cartItems: cartItems
+            }
+            console.log(requestBody)
+
+            fetch(
+                "https://www.bit-by-bit.ru/api/student-projects/restaurants/order",
+                {
+                    method: "POST",
+                    body: JSON.stringify(requestBody)
+                }
+            )
+                .then((response) => response.json())
+                .then((result) => {
+                    console.log(result)
+                    setCustomerName("")
+                    setPhone("")
+                    setEmail("")
+                    setIsOpen(true)
+                    setWarning(false)
+                    setCartItems(result.cartItems)
+                    setCartItems([])
+                    localStorage.clear()
+                })
+        } catch (error) {
+            setWarning(true)
+        }
     }
-    /*const clearCart = () => {
-        localStorage.clear()
-        setCartItems([])
-        
-    }*/
+
     return (
         <div className="">
             <div className="">
                 <div className="flex flex-nowrap justify-between items-center">
-                <p className="text-md text-stone-600 mt-2">Фамилия Имя</p>
-                {warning && <p className="text-red-600">Заполните все поля</p>}
+                    <p className="text-md text-stone-600 mt-2">Фамилия Имя</p>
+                    {warning && (
+                        <p className="text-red-600">Заполните все поля</p>
+                    )}
                 </div>
                 <input
                     value={customerName}
@@ -116,7 +115,11 @@ const OrderForm = () => {
                     Отправить заказ
                 </button>
             </div>
-            <MyModal isOpen={isOpen} setIsOpen={setIsOpen} />
+            <MyModal
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                clearCart={clearCart}
+            />
         </div>
     )
 }
