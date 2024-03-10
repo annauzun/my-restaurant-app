@@ -17,7 +17,7 @@ const ErrorModal = (props: Props) => {
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                <Dialog as="div" className="relative z-100" onClose={closeModal}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -41,7 +41,7 @@ const ErrorModal = (props: Props) => {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full px-2 md:w-1/2 transform overflow-hidden bg-white p-6 text-center align-middle shadow-xl transition-all">
+                                <Dialog.Panel className="w-full z-100 px-2 md:w-1/2 transform overflow-hidden bg-white p-6 text-center align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-red-600"

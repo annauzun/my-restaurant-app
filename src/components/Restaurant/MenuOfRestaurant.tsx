@@ -192,7 +192,7 @@ const MenuOfRestaurant = () => {
                                         description={item.description}
                                     />
                                 </div>
-                                <p className="text-xl font-semibold p-1 z-20 text-[#5e6600] text-left ml-2">
+                                <p className="text-xl font-semibold p-1 text-[#5e6600] text-left ml-2">
                                     Цена: {Math.round(item.price)} руб.
                                 </p>
                                 <div>
