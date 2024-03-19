@@ -15,7 +15,6 @@ function App() {
                 <Route path="restaurant/:slug" element={<RestaurantPage />} />
                 <Route path="/cart" element={<Cart />} />
             </Routes>
-
             <Footer />
         </BrowserRouter>
     )
